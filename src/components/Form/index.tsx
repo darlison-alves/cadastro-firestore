@@ -1,17 +1,29 @@
 import React from 'react'
 import { Formik } from 'formik'
-
-import { Container, SubmitButton, BodyForm, TextInput, SubmitButtonText, TextError } from './styles';
+import { Button } from 'react-native-elements'
+import { Container, SubmitButton, BodyForm, TextInput, SumitButtonN, TextError, SubmitButtonText } from './styles';
 import { ICadastro } from './interfaces/ICadastro';
 import { cadastroSchema } from './validate';
+import { AppPropsFormAction } from './connectedForm';
+import { ActivityIndicator } from 'react-native';
 
-export class CustomForm extends React.Component {
+export class CustomForm extends React.Component<AppPropsFormAction> {
+    state ={
+        loading: false
+    }
     render() {
+        const { cadastrar, loading } = this.props       
         return (
             <Container>
                 <Formik 
-                    initialValues={{ name: "", document: "", type: "deede" }} 
-                    onSubmit={(values: ICadastro) => console.log(values)}
+                    initialValues={{ name: "", document: "" }}
+                    onSubmit={(values: ICadastro, { resetForm }) =>{                       
+                        this.setState({loading: true})
+                        cadastrar(values)
+                        resetForm()
+                        this.setState({loading: false})                        
+                    }}
+                    
                     validationSchema={cadastroSchema}
                 >
                     {(props) => (
@@ -19,8 +31,7 @@ export class CustomForm extends React.Component {
                             <TextError>{ props.errors.name }</TextError>
                             <TextInput
                                 placeholder="Nome e sobrenome"
-                                onChangeText={props.handleChange('name')}
-                                onBlur={props.handleBlur('name')}
+                                onChangeText={props.handleChange('name')}                                
                                 value={props.values.name}
                             />                           
 
@@ -29,11 +40,13 @@ export class CustomForm extends React.Component {
                                 keyboardType="numeric"
                                 placeholder="CPF / CNPJ"
                                 onChangeText={props.handleChange('document')}
-                                onBlur={props.handleBlur('document')}
                                 value={props.values.document}
                             />
-                            <SubmitButton title="ENVIAR" onPress={props.handleSubmit} color="#ff6a00" />
-                                
+                           {
+                                props.isSubmitting ? <Button title="ENVIAR" loading /> : <Button title="ENVIAR" onPress={(values) => {
+                                    props.handleSubmit(values)
+                                 } } />
+                           }
                         </BodyForm>
                     )}
                     
@@ -42,3 +55,5 @@ export class CustomForm extends React.Component {
         )
     }
 }
+
+//<SumitButtonN title={`ENVIAR`} disabled={loading.valueOf()} onPress={props.handleSubmit} color="#ff6a00" />                            

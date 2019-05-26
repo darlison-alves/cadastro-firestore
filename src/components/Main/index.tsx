@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container, Content, ContentList } from "./styles";
 import Header from '../Header';
-import { CustomForm } from '../Form';
-import { FlatListUsuario } from '../List';
+import ConnectedList from '../List/connectedList';
+import ConnectedForm from '../Form/connectedForm';
 
 export class Main extends React.Component {
     render(){
@@ -11,11 +11,11 @@ export class Main extends React.Component {
                 <Container>
                     <Header />
                     <Content>
-                        <CustomForm />                               
+                        <ConnectedForm />                               
                     </Content>                    
                 </Container>
                 <ContentList>
-                    <FlatListUsuario />
+                    <ConnectedList />
                 </ContentList>
             </>
         )

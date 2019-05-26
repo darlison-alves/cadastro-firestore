@@ -3,37 +3,29 @@ import { StyleSheet, FlatList, View, Text, ActivityIndicator } from 'react-nativ
 
 import {Container, ContainerItem, ContainerItemText, TextItemPrincipal, TextItemSecondario, Header} from './styles'
 import { ICadastro } from '../Form/interfaces/ICadastro';
+import { AppPropsCadastroAction } from './connectedList';
 
-export class FlatListUsuario extends React.Component {
-    state ={
-        data: [
-            { name: 'mariana couto', document: '18707293070', type: 'individual' },
-            { name: 'mikael pascal ', document: '59544126000170', type: 'business' },
-            { name: 'darlison alves ', document: '59544136000170', type: 'business' },
-            { name: 'mikael pascal ', document: '59544000170', type: 'business' },
-            { name: 'mariana couto', document: '187072993070', type: 'individual' },
-            { name: 'mikael pascal ', document: '5954412360070170', type: 'business' },
-            { name: 'darlison alves ', document: '5954413600170', type: 'business' },
-            { name: 'mikael pascal ', document: '5954412422000170', type: 'business' },
-            { name: 'mariana couto', document: '187072930740', type: 'individual' },
-            { name: 'mikael pascal ', document: '595441260040170', type: 'business' },
-            { name: 'darlison alves ', document: '595441360050170', type: 'business' },
-            { name: 'mikael pascal ', document: '595441240001570', type: 'business' }
-        ]
+export class FlatListUsuario extends React.Component<AppPropsCadastroAction> {
+    componentDidMount(){
+        this.props.getUsuarios()
     }
 
     _keyExtractor = (item: ICadastro) => item.document
 
     render() {
 
-        if(!this.state.data.length) return null;
+        const { usuarios, loading } = this.props
+
+        if(!usuarios.length) return null;
+
+        if(loading) return <ActivityIndicator size="large" />
 
         return (
             <Container>
                 <Header><Text>USUÁRIOS</Text></Header>
                 <FlatList                    
                     keyExtractor={this._keyExtractor}
-                    data={this.state.data}
+                    data={usuarios}
                     renderItem={({item}) => <RenderItem item={item} />}
                     onEndReached={() => this.setState({ loading: true })}
                     ListFooterComponent={<ActivityIndicator size="large" />}

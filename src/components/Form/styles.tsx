@@ -11,10 +11,6 @@ export const SubmitButton = styled.Button`
     border: 2px solid red;
     border-radius: 3px;
 `
-export const SubmitButtonText = styled.Text`
-    color: #FFF
-`
-
 export const BodyForm = styled.View``
 
 export const TextInput = styled.TextInput`
@@ -26,4 +22,22 @@ export const TextInput = styled.TextInput`
 export const TextError = styled.Text`
     font-size: 10;
     color: #FE2E2E
+`
+
+
+export const SumitButtonN = styled.TouchableOpacity`
+    border-width:${StyleSheet.hairlineWidth}px;
+    border-color: #ff6a00;
+    backgroundColor: #ff6a00
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    margin-top: 15px;
+`
+
+export const SubmitButtonText = styled.Text`
+    color: #FFF;
+    font-weight: bold;
+    font-size: 13px;
 `
