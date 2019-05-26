@@ -43,10 +43,10 @@ export class FlatListUsuario extends React.Component {
     }
 }
 
-function RenderItem (props: { item: ICadastro }) {    
+function RenderItem (props: { item: ICadastro }) {
     return (
         <ContainerItem>            
-            <ContainerItemText {...props} backcolor={props.item.document.length > 11 ? '#ff6a00': '#00b2ff'} >
+            <ContainerItemText {...{...props, backcolor: props.item.document.length > 11 ? '#ff6a00': '#00b2ff' }  } >
                 <TextItemPrincipal>{props.item.name}</TextItemPrincipal>
                 <TextItemSecondario >{props.item.document}</TextItemSecondario>
                 <TextItemSecondario >{props.item.type}</TextItemSecondario>
